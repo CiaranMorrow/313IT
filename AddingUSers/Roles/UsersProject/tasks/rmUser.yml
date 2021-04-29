@@ -1,0 +1,18 @@
+#- name: Remove Users
+#  hosts: CentosBoxes
+#  gather_facts: true
+#  become: true
+  #vars_files:
+  #  - /etc/ansible/Roles/UsersProject/vars/UserVarsFile.yml
+#  tasks:
+
+    ###Need when module
+  - name: Remove the user 'DanL'
+  - vars_files:
+    - /etc/ansible/Roles/UsersProject/vars/UserVarsFile.yml
+    user:
+      name: "{{ item.name }}"
+      state: absent
+      remove: yes
+      force: yes
+    with_items: "{{ unauthorised_users }}"

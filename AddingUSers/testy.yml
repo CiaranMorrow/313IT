@@ -1,0 +1,25 @@
+---
+
+#- name: MariaDB
+#  hosts: ClientAGroup, ClientBGroup
+#  gather_facts: true
+#  become: true
+##  tasks:
+  #  - name: install mariadb
+  #    yum:
+  #      name:
+  #        - mariadb-server
+  #        - python3-PyMySQL
+  #      state: latest
+  #  - name: start mariadb
+  #    service:
+  #      name: mariadb
+  #      enabled: true
+  #      state: started
+
+- name: Remove Users
+  hosts: CentosBoxes
+  gather_facts: true
+  become: true
+  roles:
+    - UsersProject    

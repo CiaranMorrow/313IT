@@ -1,0 +1,22 @@
+- name: Print All Users
+  hosts: CentosBoxes
+  become: true
+  gather_facts: true
+  tasks:
+        - name: Get a timestamp
+          command: date +%M%H%d%m%Y
+          register: timestamp
+
+        - name: Creating Folder
+          file:
+             state: directory
+             path: /etc/{{ inventory_hostname }}{{ timestamp.stdout }}
+             mode: u+rw,g-wx,o-rwx
+
+        - name: Download file from Remote Machine to Local ansible node without directory structures
+          fetch:
+            src: /etc/passwd
+            dest: /etc/today/passwd{{ inventory_hostname }}/{{ timestamp.stdout }}
+            flat: yes
+
+        #### shell method - printing out shell command

@@ -1,0 +1,10 @@
+---
+- name: testing CentosOne Only
+  hosts: CentosOne
+  roles:
+   - UserProject
+
+- name: testing CentosTwo Only
+  hosts: CentosTwo
+  roles:
+   - UserProject

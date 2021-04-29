@@ -1,0 +1,10 @@
+---
+- name: testing Boxes All
+  hosts: CentosBoxes
+  roles:
+   - UserProject
+
+#- name: testing CentosTwo Only
+#  hosts: CentosTwo
+#  roles:
+#   - UserProject

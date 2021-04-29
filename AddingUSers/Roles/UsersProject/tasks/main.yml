@@ -1,0 +1,5 @@
+---
+# tasks file for UsersProject
+#- include_tasks: printUsers.yml
+#- include_tasks: AddUser.yml
+- import_tasks: rmUser.yml

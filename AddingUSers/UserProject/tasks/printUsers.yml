@@ -1,0 +1,15 @@
+- name: Get a timestamp
+  command: date +%M%H%d%m%Y
+  register: timestamp
+
+- name: Creating a Folder
+  file:
+    state: directory
+    path: /etc/PASSWORD/{{ inventory_hostname }}/{{ inventory_hostname }}-{{ timestamp.stdout }}
+    mode: u+rw,g-wx,o-rwx
+
+- name: Download file from Remote Machine to Local ansible node without directory structures
+  fetch:
+    src: /etc/passwd
+    dest: /etc/PASSWORD/{{ inventory_hostname }}/Passwd-{{ inventory_hostname }}-{{ timestamp.stdout }}
+    flat: yes
