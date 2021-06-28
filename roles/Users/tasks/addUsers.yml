@@ -1,0 +1,17 @@
+---
+- name: Adding to Targets Using Variables in Main.yml
+  user:
+     name: "{{ item.New_User_Name }}"
+     shell: /bin/bash
+     comment: "{{ item.New_User_Comment }}"
+  #   uid: "{{ item.New_User_UID }}"
+     state: present
+  with_items: "{{ authorised_user }}"
+
+- name: Adding Authorised Key to New User
+  authorized_key:
+    user: "{{ item.New_User_Name }}"
+    exclusive: false
+    state: present
+    key: "{{ lookup('file', '/root/.ssh/id_rsa.pub') }}"
+  with_items: "{{ authorised_user }}"

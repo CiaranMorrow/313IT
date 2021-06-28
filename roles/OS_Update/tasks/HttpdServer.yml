@@ -1,0 +1,4 @@
+- name: Install one specific version of Apache
+  yum:
+    name: Apache-2.4.6 
+    state: present

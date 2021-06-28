@@ -1,0 +1,124 @@
+---
+all:
+  children:
+    Controller_Group:
+      hosts:
+        Client_Bastion_ER:
+                ansible_host: 10.0.0.46
+                ansible_connection: ssh
+                ansible_ssh_private_key_file: ~/.ssh/id_rsa
+
+    Bastion_Group:
+      hosts:
+        Client_Bastion_A:
+               ansible_host: 10.0.0.46
+               ansible_connection: ssh
+               ansible_ssh_private_key_file: ~/.ssh/id_rsa
+
+        Client_Bastion_B:
+               ansible_host: 30.0.0.46
+               ansible_connection: ssh
+               ansible_ssh_private_key_file: ~/.ssh/id_rsa
+    Client_Group_A:
+      hosts:
+        Client_A:
+               ansible_host: 20.0.0.23
+               ansible_connection: ssh
+               ansible_ssh_private_key_file: ~/.ssh/id_rsa
+               ansible_ssh_common_args: '-o ProxyCommand="ssh -o StrictHostKeyChecking=no -W %h:%p -q root@10.0.0.46"'
+  #     Client_B:
+  #             ansible_host: 20.0.0.69
+  #             ansible_connection: winrm
+  #             ansible_user: IEUser
+  #             ansible_password: Passw0rd!
+  #             ansible_winrm_server_cert_validation: ignore
+  #             ansible_ssh_private_key_file: ~/.ssh/id_rsa
+  #             ansible_ssh_common_args: '-o ProxyCommand="ssh -o StrictHostKeyChecking=no -W %h:%p -q root@10.0.0.46"'
+    Client_Group_B:
+      hosts:
+        Client_C:
+               ansible_host: 40.0.0.23
+               ansible_connection: ssh
+               ansible_ssh_private_key_file: ~/.ssh/id_rsa
+               ansible_ssh_common_args: '-o ProxyCommand="ssh -o StrictHostKeyChecking=no -W %h:%p -q root@30.0.0.46"'
+        Client_D:
+               ansible_host: 40.0.0.69
+               ansible_connection: ssh
+            #   ansible_ssh_private_key_file: ~/.ssh/id_rsa
+               ansible_user: root
+               ansible_password: 123456
+               UserKnownHostsFile: /dev/null
+               StrictHostKeyChecking: no
+               ansible_ssh_common_args: '-o ProxyCommand="ssh -o StrictHostKeyChecking=no -W %h:%p -q root@30.0.0.46"'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#all:
+#   hosts:
+#    Client_Controller:
+#      hosts:
+#        Client_Bastion_ER:
+#              ansible_host: 10.0.0.46
+#              ansible_connection: ssh
+#              ansible_ssh_private_key_file: ~/.ssh/id_rsa
+#  #  Group_A:
+#  #      hosts:
+#        Client_Bastion_A:
+#                ansible_host: 10.0.0.46
+#                ansible_connection: ssh
+#                ansible_ssh_private_key_file: ~/.ssh/id_rsa
+#
+#        Client_A:
+#                ansible_host: 20.0.0.23
+#                ansible_connection: ssh
+#                ansible_ssh_private_key_file: ~/.ssh/id_rsa
+#                ansible_ssh_common_args: '-o ProxyCommand="ssh -o StrictHostKeyChecking=no -W %h:%p -q root@10.0.0.46"'
+#
+#      #  Client_B:
+#      #          ansible_host: 20.0.0.69
+#      #          ansible_connection: winrm
+#      #          ansible_user: IEUser
+#      #          ansible_password: Passw0rd!
+#      #          ansible_winrm_server_cert_validation: ignore
+#      #          #ansible_ssh_private_key_file: ~/.ssh/id_rsa
+#      #          ansible_ssh_common_args: '-o ProxyCommand="ssh -o StrictHostKeyChecking=no -W %h:%p -q root@10.0.0.46"'
+#
+#    #Group_B:
+#    #    hosts:
+#        Client_Bastion_B:
+#                ansible_host: 30.0.0.46
+#                ansible_connection: ssh
+#                ansible_ssh_private_key_file: ~/.ssh/id_rsa
+#
+#
+#
+#        Client_C:
+#                ansible_host: 40.0.0.23
+#                ansible_connection: ssh
+#                ansible_ssh_private_key_file: ~/.ssh/id_rsa
+#                ansible_ssh_common_args: '-o ProxyCommand="ssh -o StrictHostKeyChecking=no -W %h:%p -q root@30.0.0.46"'
+#
+#        Client_D:
+##                ansible_host: 192.168.1.4
+#                ansible_connection: ssh
+  #              ansible_user: root
+  #              ansible_password: 123456
+#
+#
+#              #  ansible_host: 40.0.0.69
+#              #  ansible_connection: ssh
+#              #  ansible_ssh_private_key_file: ~/.ssh/id_rsa
+#              #  ansible_ssh_common_args: '-o ProxyCommand="ssh -o StrictHostKeyChecking=no -W %h:%p -q root@30.0.0.46"'
+#

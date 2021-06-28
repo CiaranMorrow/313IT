@@ -1,0 +1,16 @@
+
+# https://fotoallerlei.com/blog/post/2021/figuring-out-the-network-interface-of-an-ip-address-in-ansible/post
+## figure out ports that are open with an ip address
+  - name: set_fact | figure out network device of private network
+    set_fact:
+      private_interface: "{{ hostvars[inventory_hostname]['ansible_' + item]['device'] }}"
+    when:
+        - hostvars[inventory_hostname]['ansible_' + item].ipv4 is defined
+    with_items: "{{ ansible_interfaces }}"
+
+
+## port open   - - need to check other ports open - work on this !!!
+  - name: debug | print network interface
+    debug:
+      msg: Interface {{ private_interface | default("not") }} found
+    # allNetworkInterfaces_variant2: "{{ ansible_facts.interfaces | map('extract', ansible_facts ) | list }}"

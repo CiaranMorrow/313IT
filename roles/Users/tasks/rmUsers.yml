@@ -1,0 +1,8 @@
+---
+  - name: Remove the Users -  Cycle Names
+    user:
+      name: "{{ item.name }}"
+      state: absent
+      remove: yes
+      force: yes
+    with_items: "{{ unauthorised_users }}"

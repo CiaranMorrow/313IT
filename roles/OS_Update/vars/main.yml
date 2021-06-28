@@ -1,0 +1,5 @@
+---
+# vars file for OS_Update
+authorised_user:
+  -
+    output_file: OS.csv

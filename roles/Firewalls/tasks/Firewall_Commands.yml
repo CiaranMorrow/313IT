@@ -1,0 +1,16 @@
+
+
+
+
+
+- name: FirewallD rules
+  firewalld:
+      permanent: yes
+      immediate: yes
+      port: "{{item.port}}/{{item.proto}}"
+      state: "{{item.state}}"
+      zone: "{{item.zone}}"
+  with_items:
+       - {port: "6060", proto: "udp", state: "enabled", zone: "public" }
+       - {port: "6062-6064", proto: "tcp", state: "enabled", zone: "public" }
+       - {port: "7023", proto: "udp", state: "enabled", zone: "public" }

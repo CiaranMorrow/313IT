@@ -1,0 +1,8 @@
+ - name: conditionals
+   hosts: all
+   become: true
+   gather_facts: no
+   order: inventory
+   #serial: 1
+   roles:
+         -  Users

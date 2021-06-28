@@ -1,0 +1,38 @@
+# https://fotoallerlei.com/blog/post/2021/figuring-out-the-network-interface-of-an-ip-address-in-ansible/post
+
+
+
+  #- name: Connected to Internet via...
+  #  set_fact:
+  #    TelentInternetCon: "{{ item }}"
+  #  with_items: "{{ ansible_all_ipv4_addresses }}"
+  #  when: "item.startswith('192.168.1')"
+#
+#  - debug:
+#      var: TelentInternetCon
+
+     - name: Collect only facts about hardware
+       setup:
+         gather_subset:
+           - 'hardware'
+
+     - name: Test for available disk space
+       setup: filter=ansible_mounts
+
+     - name: Ensure that free space on the tested volume is greater than 15%
+       assert:
+         that:
+           - mount.size_available > mount.size_total|float * 0.05
+         msg: Disk space has reached 95% threshold
+       vars:
+         mount: "{{ ansible_mounts | selectattr('mount','equalto',item.mount) | list | first }}"
+       with_items:
+         - "{{ ansible_mounts }}"
+
+
+    # allNetworkInterfaces_variant2: "{{ ansible_facts.interfaces | map('extract', ansible_facts ) | list }}"
+
+
+#ansible_all_ipv4_addresses
+#ansible_enp0s9
+#ansible_kernel_version

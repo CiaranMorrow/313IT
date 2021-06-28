@@ -1,0 +1,16 @@
+ - name: conditionals
+   hosts: all
+   #become: true
+   gather_facts: no
+   order: sorted
+
+   serial: 1
+
+   tasks:
+         - debug:
+            var: inventory_hostname
+
+
+  #   - name: main conditional role inclded
+  #     include_role:
+  #       name: Conditionals
