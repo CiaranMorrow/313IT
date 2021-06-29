@@ -1,7 +1,7 @@
 ---
 # tasks file for Firewalls
-#- import_tasks: Firewall_Commands.yml  COMPLETE
-- import_tasks: Interfaces.yml
+#- import_tasks: Firewall_Commands.yml
+#- import_tasks: Interfaces.yml
 #- import_tasks: MacAddresses.yml
 #- import_tasks: Ports_Open.yml
 #- import_tasks: DefaultIPv4Address.yml
