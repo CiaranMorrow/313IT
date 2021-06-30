@@ -1,13 +1,13 @@
 ---
 # defaults file for Firewalls
 
-# firewalld state( present | latest | absent )
+# firewalld state - ( Present // Latest // Absent )
 firewalld_state: latest
 
-# Print firewall rules (true | false)
+# Print firewall rules (true //  false) - good for Dev engineers troubleshooting
 firewalld_debug: false
 
-# Add or remove firewall rules. By default will allow ssh connections.
+# Firewall rules  - Telent Require SSH open
 firewalld_rules:
   ssh:
     port: 22

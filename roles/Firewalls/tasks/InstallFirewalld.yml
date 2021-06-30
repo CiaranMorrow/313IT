@@ -1,33 +1,33 @@
 ## https://github.com/tovletoglou/ansible-role-firewalld/blob/master/defaults/main.yml
 
-- name: Install firewalld
-  become: yes
+- name: Telent Server Installing Firewalld
+  become: yes ## Sudo powers used
   package:
-    name: firewalld
-    state: "{{ firewalld_state }}"
+    name: firewalld ## name of package to be installed - FirewallD elected to be used
+    state: "{{ firewalld_state }}" ## state is stored in defaults - variable
 
-- name: Start and set up firewalld
-  become: yes
+- name: Start && Configuring Firewalld
+  become: yes ## Sudo powers used
   service:
-    name: firewalld
-    enabled: yes
-    state: started
+    name: firewalld ## service name
+    enabled: yes    ## service started after system reload
+    state: started ## starting system
 
-- name: Update firewall rules
-  become: yes
-  firewalld:
-    port: "{{ item.value.port }}/{{ item.value.protocol }}"
-    permanent: "{{ item.value.permanent }}"
-    state: "{{ item.value.state }}"
-    zone: "{{ item.value.zone }}"
-  with_dict: "{{ firewalld_rules }}"
-#  notify: restart firewalld
+- name: Managing Firewall rules ## relevent name for tasks
+  become: yes ## Sudo powers used
+  firewalld: ## service
+    port: "{{ item.value.port }}/{{ item.value.protocol }}" ## port and protocol stored in default as variable to aid maintenance
+    permanent: "{{ item.value.permanent }}"                 ## permenant - to remain after reboot
+    state: "{{ item.value.state }}"                         ## state stored as var for maintainability
+    zone: "{{ item.value.zone }}"                           ##  area of the firewall rule applicability
+  with_dict: "{{ firewalld_rules }}"                        ##  rules stored as var for maintainability
+  notify: restart firewalld
 
-- name: Check firewall configuration
-  command: firewall-cmd --list-all
-  when: firewalld_debug
-  register: check_firewalld
+- name: Firewall config checks for Troubleshooting          ## Used in Troubleshooting
+  command: firewall-cmd --list-all                          ## list all firewall serttings
+  when: firewalld_debug                                     ## conditional for troubleshooting
+  register: check_firewalld                                 ## recording vars
 
-- name: Print firewall configuration
-  debug: msg="{{ check_firewalld.stdout_lines }}"
-  when: firewalld_debug
+- name: Outputting firewallD config                         ## outputting registered var
+  debug: msg="{{ check_firewalld.stdout_lines }}"           ## Var ouput message
+  when: firewalld_debug                                     ## debugging conditional required
