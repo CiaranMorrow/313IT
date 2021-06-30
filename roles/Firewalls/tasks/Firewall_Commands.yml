@@ -1,11 +1,13 @@
-- name: FirewallD rules
+
+#### Firewall Settings ####
+- name: Commanding the FirewallD rules -
   firewalld:
-      permanent: yes
-      immediate: yes
-      port: "{{item.port}}/{{item.proto}}"
-      state: "{{item.state}}"
-      zone: "{{item.zone}}"
-  with_items:
-       - {port: "6060", proto: "udp", state: "enabled", zone: "public" }
-       - {port: "6062-6064", proto: "tcp", state: "enabled", zone: "public" }
-       - {port: "7023", proto: "udp", state: "enabled", zone: "public" }
+      immediate: yes ## Occur immediately
+      permanent: yes ## Settings Remain after Reboot
+      port: "{{item.PortSettings}}/{{item.ProtcolUsed}}" ## Applied to "x" Ports - With "x" protocol
+      zone: "{{item.zone}}" ## - Within "x" security zone
+      state: "{{item.NewState}}" ## - On the "enabled / disabled" port
+  with_items: ## variables to the above commands 
+       - {PortSettings: "6060", ProtcolUsed: "udp", NewState: "enabled", zone: "public" }
+       - {PortSettings: "6062-6064", ProtcolUsed: "tcp", NewState: "enabled", zone: "public" }
+       - {PortSettings: "7023", ProtcolUsed: "udp", NewState: "enabled", zone: "public" }

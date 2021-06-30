@@ -1,0 +1,17 @@
+# https://fotoallerlei.com/blog/post/2021/figuring-out-the-network-interface-of-an-ip-address-in-ansible/post
+
+
+
+  - name: Server connected to Internet via...
+    set_fact:
+      TelentInternetCon: "{{ item }}" ##Setting Internet connection variable fact
+    with_items: "{{ ansible_all_ipv4_addresses }}" ## gathers IPv4 Addresses of the host
+    when: "item.startswith('192.168.1')" ## Filters IP Address using known/expected prefix
+
+  - debug: ## show Hostname coupled with the server's internet connection
+       msg: " Hostname: {{ inventory_hostname }} is connected to the internet via: {{ TelentInternetCon }} "
+
+
+#ansible_all_ipv4_addresses
+#ansible_enp0s9
+#ansible_kernel_version

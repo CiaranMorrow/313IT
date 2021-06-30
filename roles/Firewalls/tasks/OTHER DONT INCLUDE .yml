@@ -1,0 +1,70 @@
+     - name: Collect only facts about hardware
+       setup:
+         gather_subset:
+           - 'hardware'
+
+     - name: Test for available disk space
+       setup: filter=ansible_mounts
+
+     - name: Ensure that free space on the tested volume is greater than 15%
+       assert:
+         that:
+           - mount.size_available > mount.size_total|float * 0.05
+         msg: Disk space has reached 95% threshold
+       vars:
+         mount: "{{ ansible_mounts | selectattr('mount','equalto',item.mount) | list | first }}"
+       with_items:
+         - "{{ ansible_mounts }}"
+##########################################################################
+     #####https://luktom.net/en/e1497-how-to-update-centos-rhel-using-ansible
+
+     ############### YUM FOR CentOS BOXES ##############################
+     - name: Checking Packages for updates
+       shell: yum list updates | awk 'f;/Updated Packages/{f=1;}' | awk '{ print $1 }'
+       changed_when: updates.stdout_lines | length > 0
+       args:
+         warn: false
+       register: updates
+       when: ansible_distribution == 'CentOS'
+
+     - name: display count
+       debug:
+         msg: "Found {{ updates.stdout_lines | length }} packages to be updated:\n\n{{ updates.stdout }}"
+       when: ansible_distribution == 'CentOS'
+
+     - when: updates.stdout_lines | length > 0 and ansible_distribution == 'CentOS'
+       block:
+         - name: install updates using yum
+           yum:
+             name: "*"
+             state: latest
+
+         - name: install yum-utils
+           package:
+             name: yum-utils
+
+         - name: check if reboot is required
+           shell: needs-restarting -r
+           failed_when: false
+           register: reboot_required
+           changed_when: false
+
+
+     - when: updates.stdout_lines | length > 0 and reboot_required.rc != 0
+       block:
+         - name: reboot the server if required
+           shell: sleep 3; reboot
+           ignore_errors: true
+           changed_when: false
+           async: 1
+           poll: 0
+
+         - name: wait for server to come back after reboot
+           wait_for_connection:
+             timeout: 600
+             delay: 20
+           register: reboot_result
+
+         - name: reboot time
+           debug:
+             msg: "The system rebooted in {{ reboot_result.elapsed }} seconds."
