@@ -1,12 +1,15 @@
-- name: "OS Data Recorded Before Changes"
-  lineinfile:
+- name: Documenting Telent Server Operating System Data - Before Changes
+  lineinfile:                                                                 ##  Adding line into file
+                                                                              ##  Line to be added (see below) - note the .csv format  - document created if not already exisiting
+                                                                              ##  OriginalOSTimestamp variable used -  shows before and after
     path: /etc/ansible/OSData/PlaybookDeployed@{{ OriginalOSTimeStamp.stdout }}/OSData@-{{ OriginalOSTimeStamp.stdout }}.csv
-    mode: 0644
+    mode: 0644                                                                ##  File permissions
+                                                                              ##  Data variables from Telent's servers to be Logged - note the AFTER.
     line: "{{ ansible_hostname }},\
-                  {{ ansible_distribution }},\
-                  {{ ansible_distribution_version }},\
-                  {{ ansible_distribution_release }},\
-                  {{ OriginalOSTimeStamp.stdout }},\
-                  AFTER"
+              {{ ansible_distribution }},\
+              {{ ansible_distribution_version }},\
+              {{ ansible_distribution_release }},\
+              {{ OriginalOSTimeStamp.stdout }},\
+              AFTER"                                                          ##  Note the "After" - important distinction
     create: yes
   delegate_to: localhost

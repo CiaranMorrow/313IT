@@ -2,5 +2,5 @@
 # tasks file for Firewalls
 
 ## The following tasks are run in order and are imported from the Task File within the Firewalls Role
-- import_tasks: Firewall_Commands.yml     ## Commented fully
-- import_tasks: InstallFirewalld.yml       ## Commented fully
+- import_tasks: Firewall_Commands.yml                                         ##  Commented fully
+- import_tasks: InstallFirewalld.yml                                          ##  Commented fully

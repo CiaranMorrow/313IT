@@ -1,4 +1,5 @@
-- name: Install one specific version of Apache
+- name: Install Web Server (Apache)
   yum:
-    name: Apache-2.4.6 
+    name: Apache-2.4.6
     state: present
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'

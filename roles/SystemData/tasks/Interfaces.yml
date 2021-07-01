@@ -4,21 +4,12 @@
 
   - name: Connected to Internet via...
     set_fact:
-      TelentInternetCon: "{{ item }}"
+      TelentInternetCon: "{{ item }}"                                         ## Ansible facts being attached to Variable
     with_items: "{{ ansible_all_ipv4_addresses }}"
-    when: "item.startswith('192.168.1')"
-
+    when: "item.startswith('192.168.1')"                                      ## Local internet connection using defined IP address start
+                                                                              ## Filters out other addresses without correct starting
   - debug:
-      var: TelentInternetCon
-
-
-
-
-         ##
-
-         ###
-
-    # allNetworkInterfaces_variant2: "{{ ansible_facts.interfaces | map('extract', ansible_facts ) | list }}"
+      var: TelentInternetCon                                                  ##  Output Variable
 
 
 #ansible_all_ipv4_addresses

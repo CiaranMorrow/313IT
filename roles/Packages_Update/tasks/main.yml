@@ -1,8 +1,11 @@
 ---
 # tasks file for Packages_Update
-- import_tasks: UpdatingPackagesUbuntu.yml
-  when: ansible_distribution == 'Ubuntu'
+#- import_tasks: UpdatingPackagesUbuntu.yml
+#  when: ansible_distribution == 'Ubuntu'
 
 
-- import_tasks: UpdatingPackagesCentOS.yml
-  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+#- import_tasks: UpdatingPackagesCentOS.yml                                   ##  Fully commented
+#  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+#- import_tasks: UpdatingPackagesUbuntu.yml                                   ##  Fully commented
+#  when: ansible_distribution == 'Ubuntu'

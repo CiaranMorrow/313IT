@@ -1,5 +1,5 @@
 ---
-authorised_user:
+authorised_user:                                                              ## Authorised users - To be Added if absent
   -
     New_User_Comment: New User Ciaran Added
     New_User_Name: Ciaran
@@ -12,7 +12,7 @@ authorised_user:
     New_User_Comment: New User James Added
     New_User_Name: James
 #    New_User_UID: 1234
-unauthorised_users:
+unauthorised_users:                                                           ## Unauthorised users - To be removed if present 
   -
     name: Ciaran
   -

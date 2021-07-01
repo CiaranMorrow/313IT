@@ -3,19 +3,43 @@
 ## https://serverfault.com/questions/883314/show-updated-packages-with-ansible-package-management
 
 
-    - name: Ubuntu Update
-      apt:
-        #update_cache: true
-        upgrade: 'yes'
-      register: UbuntuUpgrades
+- name: Checking Packages for updates
+  shell: apt list --upgradable | awk '{ print $1 }' ##  Shell command to deduce number of updates required - stripping the titles of said updates
+  changed_when: ModuleServerChanges.stdout_lines | length > 0 ##  Indicates the change when package update required
+  args:
+    warn: false                                ##  Silences Alarm
+  register: ModuleServerChanges                ##  Saves changes required as a variable
 
-    - debug:
-        msg: " {{ UbuntuUpgrades.stdout_lines }} "
-    - name: List installed and updated packages
-      shell: grep -E "^$(date +%Y-%m-%d).+ (install|upgrade) " /var/log/dpkg.log |cut -d " " -f 3-5
-      register: result
-      when: UbuntuUpgrades.changed
+- name: display count                          ##  Outputs packages as number - more readable
+  debug:
+    msg: "Found {{ ModuleServerChanges.stdout_lines | length }} packages requiring updates"
 
-    - name: Show Output
-      debug: msg="{{ result.stdout_lines }}"
-      when: UbuntuUpgrades.changed
+#- name: Performing Ubuntu updates
+#  apt:                                        ##  package manager
+#    upgrade: dist                             ##  Dist
+#    force_apt_get: yes                        ##  Forced
+#  when: ModuleServerChanges.stdout_lines | length > 0  ##  Perform when packages available to upgradable
+
+
+- name: Reboot requirement checks
+  stat:
+    path: /var/run/reboot-required             ##  File only exists when reboot is required
+  register: necessaryreboot                    ##  Register need to reboot
+
+- name: Perfroming reboot (...if necessary)    ##  When command used as conditional
+  reboot:
+    reboot_timeout: 36000                      ##  Time-out incase there is a hang
+    test_command: ping -c 4 192.168.1.41       ##  Telent to ping Ansible controller to indicate success - indicate system's health - Does not work with Jumpserver
+  when: necessaryreboot.stat.exists == true    ##  When command used as conditional
+# rescue:  issue
+
+- name: Telent Server Reboot Delay
+  wait_for_connection:
+    delay: 5                                   ##  Period of Time Added
+  register: reboot_timed                       ##  Variable assigned to Time
+  when: necessaryreboot.stat.exists == true    ##  Checking reboot needed to start timer
+
+- name: Time taken for reboot to complete
+  debug:
+      msg: "Server took {{ reboot_timed.elapsed }} seconds to reboot"   ##  Output reboot timings
+  when: necessaryreboot.stat.exists == true    ## Only outputting timings when reboot ncessary

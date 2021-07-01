@@ -2,70 +2,43 @@
 
 ############### YUM FOR CentOS BOXES ##############################
 - name: Checking Packages for updates
-  shell: yum list updates | awk 'f;/Updated Packages/{f=1;}' | awk '{ print $1 }'
-  changed_when: updates.stdout_lines | length > 0
+  shell: yum list updates | awk '{ print $1 }'                                ##  Shell command to deduce number of updates required - stripping the titles of said updates
+  changed_when: ModuleServerChanges.stdout_lines | length > 0                 ##  Indicates the change when package update required
   args:
-    warn: false
-  register: updates
+    warn: false                                                               ##  Silences Alarm
+  register: ModuleServerChanges                                               ##  Saves changes required as a variable
 
-- name: display count
+- name: display count                                                         ##  Outputs packages as number - more readable
   debug:
-    msg: "Found {{ updates.stdout_lines | length }} packages to be updated:\n\n{{ updates.stdout }}"
+    msg: "Found {{ ModuleServerChanges.stdout_lines | length }} packages requiring updates"
 
-- when: updates.stdout_lines | length > 0 and ansible_distribution == 'CentOS'
-  block:
-    - name: install updates using yum
-      yum:
-        name: "*"
-        state: latest
-
-    - name: install yum-utils
-      package:
-        name: yum-utils
-
-    - name: check if reboot is required
-      shell: needs-restarting -r
-      failed_when: false
-      register: reboot_required
-      changed_when: false
+#- when: ModuleServerChanges.stdout_lines | length > 0
+#  block:                                                                     ##  Block is performed together as a result of the conditional
+#    - name: YUM package - Updating to latest available                       ##  YUM package manager updates
+#      yum:
+#        name: "*"                                                            ##  All
+#        state: latest                                                        ##  Latest Available
 
 
-- when: updates.stdout_lines | length > 0 and reboot_required.rc != 0
-  block:
-    - name: reboot the server if required
-      shell: sleep 3; reboot
-      ignore_errors: true
-      changed_when: false
-      async: 1
-      poll: 0
+- name: Reboot requirement checks
+  stat:
+    path: /var/run/reboot-required                                            ##  File only exists when reboot is required
+  register: rebootnecessary                                                   ##  Register need to reboot
 
-    - name: wait for server to come back after reboot
-      wait_for_connection:
-        timeout: 600
-        delay: 20
-      register: reboot_result
+- name: Perfroming reboot (...if necessary)                                   ##  When command used as conditional
+  reboot:
+    reboot_timeout: 36000                                                     ##  Time-out incase there is a hang
+    test_command: ping -c 4 192.168.1.41                                      ##  Telent to ping Ansible controller to indicate success - indicate system's health - Does not work with Jumpserver
+  when: rebootnecessary.stat.exists == true                                   ##  When command used as conditional
+# rescue:  issue
 
-    - name: reboot time
-      debug:
-        msg: "The system rebooted in {{ reboot_result.elapsed }} seconds."
+- name: Telent Server Reboot Delay
+  wait_for_connection:
+    delay: 5                                                                  ##  Period of Time Added
+  register: reboot_timed                                                      ##  Variable assigned to Time
+  when: rebootnecessary.stat.exists == true                                   ##  Checking reboot needed to start timer
 
-
-
-
-
-
-  #- hosts: centos
-  #  tasks:
-  #  - name: install all updates
-  #    yum:
-  #      name: '*'
-  #      update_cache: yes
-  #      state: latest
-  #  - name: List updated packages
-  #    shell: rpm -qa --last | grep "$(date +%a\ %d\ %b\ %Y)" |cut -f 1 -d " "
-  #    register: result
-  #    args:
-  #      warn: no
-#
-#    - name: Updates packages
-#      debug: msg="{{ result.stdout_lines }}"
+- name: Time taken for reboot to complete
+  debug:
+      msg: "Server took {{ reboot_timed.elapsed }} seconds to reboot"         ##  Output reboot timings
+  when: rebootnecessary.stat.exists == true                                   ## Only outputting timings when reboot ncessary

@@ -1,43 +1,20 @@
 #https://www.mydailytutorials.com/ansible-add-line-to-file/
 #https://stackoverflow.com/questions/38078247/how-to-create-ansible-playbook-to-obtain-os-versions-of-the-remote-hosts/51255585
 
-- name: Get a timestamp
-  command: date +%H.-%d.%m.%Y
-  #command: date +%H.%M-%d.%m.%Y
-  register: OriginalOSTimeStamp
+- name: "Gather OS Data"
+  package_facts:
+   manager: auto
 
-# create master folder to store all systems' data within this deployment
-#Deployment folder is using timestamp to help identify it
-- name: Creating Directory & File For Original OS Data
-  file:
-    state: directory
-    path: /etc/ansible/OSData/PlaybookDeployed@{{ OriginalOSTimeStamp.stdout }}/
-    mode: u+rw,g-wx,o-rwx
-  #  content: 'hostname,distribution,version,release,timestamp'
-  #  owner: "{{ whoami.stdout }}"
-  run_once: yes
-
-- name: "OS Data Recorded"
-  lineinfile:
+- name: "OS Data Recorded Before Any OS Changes"
+  lineinfile:                                                                 ##  Specify path
     path: /etc/ansible/OSData/PlaybookDeployed@{{ OriginalOSTimeStamp.stdout }}/OSData@-{{ OriginalOSTimeStamp.stdout }}.csv
-    mode: 0644
-    line: "Hostname,Distribution,Version,Release,Timestamp,(Before/After) Depoloyment"
-    create: yes
-  delegate_to: localhost
-
--    name: "Gather OS Data"
-     package_facts:
-      manager: auto
-
-- name: "OS Data Recorded Before Changes"
-  lineinfile:
-    path: /etc/ansible/OSData/PlaybookDeployed@{{ OriginalOSTimeStamp.stdout }}/OSData@-{{ OriginalOSTimeStamp.stdout }}.csv
-    mode: 0644
+    mode: 0644                                                                ##  File permissions
+                                                                              ##  Data variables from Telent's servers to be Logged - note the AFTER.
     line: "{{ ansible_hostname }},\
                   {{ ansible_distribution }},\
                   {{ ansible_distribution_version }},\
                   {{ ansible_distribution_release }},\
                   {{ OriginalOSTimeStamp.stdout }},\
-                  BEFORE"
-    create: yes
-  delegate_to: localhost
+                  BEFORE"                                                     ##  Data to be recorded - Note the "Before"
+    create: yes ## create if not existing
+  delegate_to: localhost ## Prevents issues regarding Python interpreters

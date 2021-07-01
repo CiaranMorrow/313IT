@@ -1,8 +1,8 @@
 ---
   - name: Remove the Users -  Cycle Names
     user:
-      name: "{{ item.name }}"
-      state: absent
-      remove: yes
-      force: yes
-    with_items: "{{ unauthorised_users }}"
+      name: "{{ item.name }}"                                                 ##  Using variable list of unauthorised users
+      state: absent                                                           ##  State of usters
+      remove: yes                                                             ##  Permission to remove if necessary
+      force: yes                                                              ##  Force if necessary
+    with_items: "{{ unauthorised_users }}"                                    ##  Using list sotred in variables 

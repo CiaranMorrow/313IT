@@ -1,5 +1,0 @@
-- name: Set UTC timezone
-  timezone: name=Etc/UTC
-  become: yes
-  tags:
-      - time

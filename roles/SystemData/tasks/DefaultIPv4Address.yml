@@ -2,6 +2,6 @@
 
 ## identifies the default ipv4 address
   - name: Recording Telent Servers' Default IPv4 Address
-    debug: var=hostvars[inventory_hostname]['ansible_default_ipv4']['address']
-    #record hostname - with default ipv4 Address
-    # [] used to filter accordingly
+    debug: var=hostvars[inventory_hostname]['ansible_default_ipv4']['address'] ##  Default IPv4 address using ansible facts
+                                                                               ##  Record hostname - with default ipv4 Address
+                                                                               ## [] Used to filter accordingly

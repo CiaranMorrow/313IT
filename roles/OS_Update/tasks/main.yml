@@ -1,12 +1,11 @@
 ---
 # tasks file for OS_Update
 
-- import_tasks: RecordOriginalOS.yml
+#- import_tasks: Timestamp.yml            ## Commented Fully
+#- import_tasks: CreateOSDirectory.yml    ## Commented Fully
+#- import_tasks: RecordOriginalOS.yml     ## Commented Fully
 
-- import_tasks: UpdateOS_Time.yml
-
-
-- import_tasks: RecordNewOS.yml
+#- import_tasks: RecordNewOS.yml
 
 #- import_tasks: HttpdServer.yml
 #  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'

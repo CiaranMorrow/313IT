@@ -4,11 +4,11 @@
 
   - name: Server connected to Internet via...
     set_fact:
-      TelentInternetCon: "{{ item }}" ##Setting Internet connection variable fact
-    with_items: "{{ ansible_all_ipv4_addresses }}" ## gathers IPv4 Addresses of the host
-    when: "item.startswith('192.168.1')" ## Filters IP Address using known/expected prefix
+      TelentInternetCon: "{{ item }}"                                         ##  Setting Internet connection variable fact
+    with_items: "{{ ansible_all_ipv4_addresses }}"                            ## Gathers IPv4 Addresses of the host
+    when: "item.startswith('192.168.1')"                                      ## Filters IP Address using known/expected prefix
 
-  - debug: ## show Hostname coupled with the server's internet connection
+  - debug:                                                                    ## Show Hostname coupled with the server's internet connection
        msg: " Hostname: {{ inventory_hostname }} is connected to the internet via: {{ TelentInternetCon }} "
 
 

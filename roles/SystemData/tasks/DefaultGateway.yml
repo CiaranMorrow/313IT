@@ -1,6 +1,6 @@
 
-  - name: Printing Hostname with IPv4 Gateway
-    ansible.builtin.debug:
+  - name: Printing Hostname with IPv4 Gateway                                 ##  Using ansible Hostname module
+    ansible.builtin.debug:                                                    ## Using ansible Default Gateway module
        msg: System {{ inventory_hostname }} Has The Default Gateway {{ ansible_default_ipv4.gateway }}
-    when: ansible_default_ipv4.gateway is defined
-    ## recording system's default gateway using variables
+    when: ansible_default_ipv4.gateway is defined                             ## Conditional to ensure IPv4 Gateway defined - prevents errors
+                                                                              ## Recording system's default gateway using variables

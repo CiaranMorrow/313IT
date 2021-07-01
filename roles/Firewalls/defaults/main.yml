@@ -1,11 +1,12 @@
 ---
 # defaults file for Firewalls
 
-# firewalld state - ( Present // Latest // Absent )
-firewalld_state: latest
-
 # Print firewall rules (true //  false) - good for Dev engineers troubleshooting
 firewalld_debug: false
+
+
+# firewalld state - ( Present // Latest // Absent )
+firewalld_state: latest
 
 # Firewall rules  - Telent Require SSH open
 firewalld_rules:
