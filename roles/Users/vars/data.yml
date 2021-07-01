@@ -1,19 +1,19 @@
 ---
-authorised_user:                                                              ## Authorised users - To be Added if absent
+authorised_user:                                                              ##  Authorised users - To be Added if absent
   -
     New_User_Comment: New User Ciaran Added
-    New_User_Name: Ciaran
-  #  New_User_UID: 10
+    New_User_Name: Ciaran                                                     ##  Username variable
+    #New_User_UID: 10                                                          ##  User Identification
   -
     New_User_Comment: New User Daniel Added
-    New_User_Name: Daniel
-  #  New_User_UID: 100233
+    New_User_Name: Daniel                                                     ##  Username variable
+    #New_User_UID: 100233                                                      ##  User Identification
   -
     New_User_Comment: New User James Added
-    New_User_Name: James
-#    New_User_UID: 1234
-unauthorised_users:                                                           ## Unauthorised users - To be removed if present 
+    New_User_Name: James                                                     ##  Username variable
+    #New_User_UID: 1234                                                         ##  User Identification
+unauthorised_users:                                                           ## Unauthorised users - To be removed if present
   -
-    name: Ciaran
+    name: Ciaran                                                              ##  Username variable
   -
-    name: Ciaranm
+    name: Ciaranm                                                             ##  Username variable

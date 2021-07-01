@@ -1,19 +1,19 @@
 ---
 authorised_user:
   -
-    New_User_Comment: New User Ciaran Added
-    New_User_Name: Ciaran
-    New_User_UID: 100
+    New_User_Comment: New User Ciaran Added                                   ##  User comment
+    New_User_Name: Ciaran                                                     ##  Username variable
+    New_User_UID: 100                                                         ##  User identification
   -
-    New_User_Comment: New User Daniel Added
-    New_User_Name: Daniel
-    New_User_UID: 123
+    New_User_Comment: New User Daniel Added                                   ##  User comment
+    New_User_Name: Daniel                                                     ##  Username variable
+    New_User_UID: 123                                                         ##  User identification
   -
-    New_User_Comment: New User James Added
-    New_User_Name: James
-    New_User_UID: 123466
+    New_User_Comment: New User James Added                                    ##  User comment
+    New_User_Name: James                                                      ##  Username variable
+    New_User_UID: 123466                                                      ##  User identification
 unauthorised_users:
   -
-    name: Ciaran
+    name: Ciaran                                                              ##  Username variable
   -
-    name: Ciaranm
+    name: Ciaranm                                                             ##  Username variable
