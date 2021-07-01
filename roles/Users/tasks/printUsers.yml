@@ -10,11 +10,11 @@
 - name: Creating Deployment Folder
   file:
     state: directory                                                          ##  Creating deployment folder
-    path: /etc/PASSWORD/{{ inventory_hostname }}/{{ inventory_hostname }}-{{ timestamp.stdout }} ## Using variables with path file
+    path: /etc/PASSWORD/{{ inventory_hostname }}/{{ inventory_hostname }}-{{ timestamp.stdout }}               ##  Using variables with path file
     mode: u+rw,g-wx,o-rwx                                                     ##  File permissions
 
-- name: Download list of users file from Remote Machine #to Local ansible node without directory structures
+- name: Download user list file from Remote Machine                           ##  To Local ansible node without directory structures
   fetch:
     src: /etc/passwd                                                          ##  Retrieving documents
-    dest: /etc/PASSWORD/{{ inventory_hostname }}/Passwd-{{ inventory_hostname }}-{{ timestamp.stdout }}  ## Destination to download list to
+    dest: /etc/PASSWORD/{{ inventory_hostname }}/Passwd-{{ inventory_hostname }}-{{ timestamp.stdout }}        ##  Destination to download list to
     flat: yes                                                                 ##  Flat file directory

@@ -1,10 +1,10 @@
 ---
 - name: Adding to Targets Using Variables in Main.yml
   user:
-     name: "{{ item.New_User_Name }}"                                         ##  Using
+     name: "{{ item.New_User_Name }}"                                         ##  Using username as Var to enable multiple users to be added - better maintainablity 
      shell: /bin/bash                                                         ##  Permitted
      comment: "{{ item.New_User_Comment }}"                                   ##  Adding Comment for each user - see vars
-  #   uid: "{{ item.New_User_UID }}"                                          ##  Assigning user ID if necessary 
+  #   uid: "{{ item.New_User_UID }}"                                          ##  Assigning user ID if necessary
      state: present                                                           ##  User present // could be absent
   with_items: "{{ authorised_user }}"                                         ##  Using list located in variables
 
