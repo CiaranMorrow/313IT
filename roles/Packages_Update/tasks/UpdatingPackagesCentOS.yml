@@ -12,12 +12,12 @@
   debug:
     msg: "Found {{ ModuleServerChanges.stdout_lines | length }} packages requiring updates"
 
-#- when: ModuleServerChanges.stdout_lines | length > 0
-#  block:                                                                     ##  Block is performed together as a result of the conditional
-#    - name: YUM package - Updating to latest available                       ##  YUM package manager updates
-#      yum:
-#        name: "*"                                                            ##  All
-#        state: latest                                                        ##  Latest Available
+- when: ModuleServerChanges.stdout_lines | length > 0
+  block:                                                                     ##  Block is performed together as a result of the conditional
+    - name: YUM package - Updating to latest available                       ##  YUM package manager updates
+      yum:
+        name: "*"                                                            ##  All
+        state: latest                                                        ##  Latest Available
 
 
 - name: Reboot requirement checks

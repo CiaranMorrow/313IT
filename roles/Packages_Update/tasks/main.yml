@@ -4,8 +4,8 @@
 #  when: ansible_distribution == 'Ubuntu'
 
 
-#- import_tasks: UpdatingPackagesCentOS.yml                                   ##  Fully commented
-#  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+- import_tasks: UpdatingPackagesCentOS.yml                                   ##  Fully commented
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
 
-#- import_tasks: UpdatingPackagesUbuntu.yml                                   ##  Fully commented
-#  when: ansible_distribution == 'Ubuntu'
+- import_tasks: UpdatingPackagesUbuntu.yml                                   ##  Fully commented
+  when: ansible_distribution == 'Ubuntu'

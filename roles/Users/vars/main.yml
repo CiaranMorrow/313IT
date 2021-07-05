@@ -1,5 +1,5 @@
 ---
-authorised_user:
+authorised_user:                                                              ##  List of variables
   -
     New_User_Comment: New User Ciaran Added                                   ##  User comment
     New_User_Name: Ciaran                                                     ##  Username variable
@@ -12,7 +12,10 @@ authorised_user:
     New_User_Comment: New User James Added                                    ##  User comment
     New_User_Name: James                                                      ##  Username variable
     New_User_UID: 123466                                                      ##  User identification
-unauthorised_users:
+
+
+
+unauthorised_users:                                                           ##  List of variables
   -
     name: Ciaran                                                              ##  Username variable
   -
