@@ -1,0 +1,7 @@
+# https://fotoallerlei.com/blog/post/2021/figuring-out-the-network-interface-of-an-ip-address-in-ansible/post
+
+## identifies the default ipv4 address
+  - name: Recording Telent Servers' Default IPv4 Address
+    debug: var=hostvars[inventory_hostname]['ansible_default_ipv4']['address']
+    #record hostname - with default ipv4 Address
+    # [] used to filter accordingly

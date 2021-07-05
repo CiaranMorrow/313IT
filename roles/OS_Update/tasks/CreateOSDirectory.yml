@@ -1,26 +1,19 @@
-
-
-
-
-
-
-
 # Create master folder to store all systems' data within Telent's deployment
 # Deployment folder is using timestamp to help identify it
 - name: Creating Directory & File For Original OS Data
   file:
-    state: directory ## Directory Created
+    state: directory                                                            ## Directory Created
     path: /etc/ansible/OSData/PlaybookDeployed@{{ OriginalOSTimeStamp.stdout }}/ ## Playbook uses timestamp variable
-    mode: u+rw,g-wx,o-rwx ## File permissions
+    mode: u+rw,g-wx,o-rwx                                                       ## File permissions
   #  content: 'hostname,distribution,version,release,timestamp'
-    owner: "{{ whoami.stdout }}" ## Detailing the playbook owner of file
-  run_once: yes ## Prevents issues of multiple occurances
+    owner: "{{ whoami.stdout }}"                                                ## Detailing the playbook owner of file
+  run_once: yes                                                                 ## Prevents issues of multiple occurances
 
 
 - name: "OS Data File - File heading created"
-  lineinfile: ## Create line in file - notice the variable of time - notice file type created (CSV)
+  lineinfile:                                                                   ## Create line in file - notice the variable of time - notice file type created (CSV)
     path: /etc/ansible/OSData/PlaybookDeployed@{{ OriginalOSTimeStamp.stdout }}/OSData@-{{ OriginalOSTimeStamp.stdout }}.csv
-    mode: 0644 ## Permissions for the file // could be 0644
+    mode: 0644                                                                  ## Permissions for the file // could be 0644
     line: "Hostname,Distribution,Version,Release,Timestamp,(Before/After) Depoloyment" ## Headings
-    create: yes ## Will create file if it does not exist
-  delegate_to: localhost ## Prevention of failures due to Python interpreter
+    create: yes                                                                 ## Will create file if it does not exist
+  delegate_to: localhost                                                        ## Prevention of failures due to Python interpreter

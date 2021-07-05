@@ -1,33 +1,33 @@
 ## https://github.com/tovletoglou/ansible-role-firewalld/blob/master/defaults/main.yml
 
 - name: Telent Server Installing Firewalld
-  become: yes                                                                 ##  Sudo powers used
+  become: yes                                                                   ##  Sudo powers used
   package:
-    name: firewalld                                                           ##  Name of package to be installed - FirewallD elected to be used
-    state: "{{ firewalld_state }}"                                            ##  State is stored in defaults - variable
+    name: firewalld                                                             ##  Name of package to be installed - FirewallD elected to be used
+    state: "{{ firewalld_state }}"                                              ##  State is stored in defaults - variable
 
 - name: Start && Configuring Firewalld
-  become: yes                                                                 ##  Sudo powers used
+  become: yes                                                                   ##  Sudo powers used
   service:
-    name: firewalld                                                           ##  Service name
-    enabled: yes                                                              ##  Service started after system reload
-    state: started                                                            ##  Starting system
+    name: firewalld                                                             ##  Service name
+    enabled: yes                                                                ##  Service started after system reload
+    state: started                                                              ##  Starting system
 
-- name: Managing Firewall rules                                               ##  Relevent name for tasks
-  become: yes                                                                 ##  Sudo powers used
-  firewalld:                                                                  ##  Service
-    port: "{{ item.value.port }}/{{ item.value.protocol }}"                   ##  Port and protocol stored in default as variable to aid maintenance
-    permanent: "{{ item.value.permanent }}"                                   ##  Permenant - to remain after reboot
-    state: "{{ item.value.state }}"                                           ##  State stored as var for maintainability
-    zone: "{{ item.value.zone }}"                                             ##  Area of the firewall rule applicability
-  with_dict: "{{ firewalld_rules }}"                                          ##  Rules stored as var for maintainability
+- name: Managing Firewall rules                                                 ##  Relevent name for tasks
+  become: yes                                                                   ##  Sudo powers used
+  firewalld:                                                                    ##  Service
+    port: "{{ item.value.port }}/{{ item.value.protocol }}"                     ##  Port and protocol stored in default as variable to aid maintenance
+    permanent: "{{ item.value.permanent }}"                                     ##  Permenant - to remain after reboot
+    state: "{{ item.value.state }}"                                             ##  State stored as var for maintainability
+    zone: "{{ item.value.zone }}"                                               ##  Area of the firewall rule applicability
+  with_dict: "{{ firewalld_rules }}"                                            ##  Rules stored as var for maintainability
   notify: restart firewalld
 
-- name: Firewall config checks for Troubleshooting                            ## Used in Troubleshooting
-  command: firewall-cmd --list-all                                            ## list all firewall serttings
-  when: firewalld_debug                                                       ## Conditional for troubleshooting
-  register: check_firewalld                                                   ## Recording vars
+- name: Firewall config checks for Troubleshooting                              ## Used in Troubleshooting
+  command: firewall-cmd --list-all                                              ## list all firewall serttings
+  when: firewalld_debug                                                         ## Conditional for troubleshooting
+  register: check_firewalld                                                     ## Recording vars
 
-- name: Outputting firewallD config                                           ## Outputting registered var
-  debug: msg="{{ check_firewalld.stdout_lines }}"                             ## Var ouput message
-  when: firewalld_debug                                                       ## Debugging conditional required
+- name: Outputting firewallD config                                             ## Outputting registered var
+  debug: msg="{{ check_firewalld.stdout_lines }}"                               ## Var ouput message
+  when: firewalld_debug                                                         ## Debugging conditional required

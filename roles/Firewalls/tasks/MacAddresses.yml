@@ -1,0 +1,8 @@
+
+
+  - name: Output Devices' attached MAC Addresses
+    debug:
+       msg: "{{ ansible_interfaces | difference(['lo']) | map('regex_replace', '^(.*)$', 'ansible_\\1' ) | map('extract', hostvars[inventory_hostname], 'macaddress')  | list }}"
+       # ansible_interfaces | difference(['lo']                                  - Removes interface from list called
+       # map('regex_replace', '^(.*)$', 'ansible_\\1' )                          - creates palletable readable format
+       # map('extract', hostvars[inventory_hostname], 'macaddress')  | list      - list the following hostname and the mac addresses

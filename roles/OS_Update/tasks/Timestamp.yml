@@ -1,4 +1,4 @@
 - name: Record a timestamp for files
   #command: date +%H.-%d.%m.%Y
-  command: date +%H.%M-%d.%m.%Y
-  register: OriginalOSTimeStamp
+  command: date +%H.%M-%d.%m.%Y                                                 ## Hour Minute Day Month Year
+  register: OriginalOSTimeStamp                                                 ## RegisterTimeStamp

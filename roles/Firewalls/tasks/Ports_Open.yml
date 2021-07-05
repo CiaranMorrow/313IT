@@ -1,0 +1,11 @@
+
+# https://fotoallerlei.com/blog/post/2021/figuring-out-the-network-interface-of-an-ip-address-in-ansible/post
+## figure out ports that are open with an ip address
+
+
+  - name: Network Interface Cards In Use
+    set_fact:
+        TelentServerInterface: "{{ hostvars[inventory_hostname]['ansible_' + item]['device'] }}"    ## detailing hostnames with interfaces
+    when:
+        - hostvars[inventory_hostname]['ansible_' + item].ipv4 is defined                           ## printing on the condition the IPv4 is in use
+    with_items: "{{ ansible_interfaces }}"
