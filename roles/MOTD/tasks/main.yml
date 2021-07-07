@@ -1,2 +1,6 @@
 ---
 # tasks file for MOTD
+- name: Create Telent MOTD File
+  template:
+    src: Message.j2
+    dest: /etc/motd

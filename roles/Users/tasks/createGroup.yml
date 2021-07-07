@@ -1,3 +1,3 @@
-- name: Create a group
+- name: Create Telent User Group
   group:
-    name: developers_314                                                      ##  Create group for users to be added to 
+    name: developers_314                                                      ##  Create group for users to be added to

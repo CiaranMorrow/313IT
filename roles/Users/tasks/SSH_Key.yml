@@ -1,0 +1,7 @@
+- name: Adding Authorised Key to New User
+  authorized_key:
+    user: "{{ item.Telent_UserName }}"                                          ##  Using authorised user variable list
+    exclusive: false                                                          ##  Not exclusive
+    state: present                                                            ##  Could be added or removed // absent
+    key: "{{ lookup('file', '/root/.ssh/id_rsa.pub') }}"                      ##  Location of key to be added to user
+  with_items: "{{ Auth_Usr_Telent }}"                                         ##  Authorised user list

@@ -1,8 +1,18 @@
 ---
-  - name: Remove the Users -  Cycle Names
+  - name: Remove the Users - Cycle Names
+    user:                                                                       ##  User module
+      name: "{{ item.Telent_Unauth_User }}"                                     ##  Using variable list of unauthorised users
+      state: absent                                                             ##  State of usters
+      remove: yes                                                               ##  Permission to remove if necessary
+      force: yes                                                                ##  Force if necessary
+    with_items: "{{ Unauth_Usr_Telent }}"                                       ##  Using list sotred in variables
+
+
+  - name: Add sudoers users to wheel group
     user:
-      name: "{{ item.name }}"                                                 ##  Using variable list of unauthorised users
-      state: absent                                                           ##  State of usters
-      remove: yes                                                             ##  Permission to remove if necessary
-      force: yes                                                              ##  Force if necessary
-    with_items: "{{ unauthorised_users }}"                                    ##  Using list sotred in variables 
+      name: "{{ item.Telent_UserName }}"
+      groups: wheel
+      append: yes
+      state: absent
+      createhome: yes
+    with_items: "{{ Auth_Usr_Telent }}"

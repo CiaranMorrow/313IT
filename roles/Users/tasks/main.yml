@@ -1,6 +1,8 @@
 ---
-#- import_tasks: printUsers.yml                                               ##  Fully commmented
-#- import_tasks: rmUsers.yml                                                  ##  Fully commmented
-#- import_tasks: addUsers.yml                                                 ##  Fully commmented
-#- import_tasks: RootPassword.yml                                             ##  Fully commmented
-#- import_tasks: createGroup.yml                                              ##  Fully commmented
+#- import_tasks: printUsers.yml                                               ##  Fully commented
+#- import_tasks: rmUsers.yml                                                  ##  Fully commented
+#- import_tasks: addUsers.yml                                                 ##  Fully commented
+#- import_tasks: RootPassword.yml                                             ##  Fully commented
+#- import_tasks: createGroup.yml                                              ##  Fully commented
+#- import_tasks: SSH_Key.yml                                                  ##  Fully commented
+#- import_tasks: sudoers.yml                                                  ##  Fully commented

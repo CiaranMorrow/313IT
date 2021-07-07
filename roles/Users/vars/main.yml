@@ -1,22 +1,24 @@
 ---
-authorised_user:                                                              ##  List of variables
+Auth_Usr_Telent:                                                                ##  List of variables
   -
-    New_User_Comment: New User Ciaran Added                                   ##  User comment
-    New_User_Name: Ciaran                                                     ##  Username variable
-    New_User_UID: 100                                                         ##  User identification
+    Telent_User_Comment: New User Ciaran Added                                  ##  User comment
+    Telent_UserName: Ciaran                                                     ##  Username variable
+    Telent_User_ID: 100
+    Telent_Sudoer: true                                                          ##  User identification
   -
-    New_User_Comment: New User Daniel Added                                   ##  User comment
-    New_User_Name: Daniel                                                     ##  Username variable
-    New_User_UID: 123                                                         ##  User identification
+    Telent_User_Comment: New User Daniel Added                                  ##  User comment
+    Telent_UserName: Daniel                                                     ##  Username variable
+    Telent_User_ID: 123
+    Telent_Sudoer: false                                                        ##  User identification
   -
-    New_User_Comment: New User James Added                                    ##  User comment
-    New_User_Name: James                                                      ##  Username variable
-    New_User_UID: 123466                                                      ##  User identification
+    Telent_User_Comment: New User James Added                                   ##  User comment
+    Telent_UserName: Shaun                                                      ##  Username variable
+    Telent_User_ID: 123423
+    Telent_Sudoer: true                                                       ##  User identification
 
 
-
-unauthorised_users:                                                           ##  List of variables
+Unauth_Usr_Telent:                                                              ##  List of variables
   -
-    name: Ciaran                                                              ##  Username variable
+    Telent_Unauth_User: Ciaran                                                  ##  Username variable
   -
-    name: Ciaranm                                                             ##  Username variable
+    Telent_Unauth_User: Ciaranm                                                 ##  Username variable

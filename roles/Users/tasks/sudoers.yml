@@ -1,0 +1,17 @@
+##https://stackoverflow.com/questions/37333305/ansible-create-a-user-with-sudo-privileges
+
+- name: Creating Sudo Wheel Group
+  group:
+    name: wheel                                                               ##  Sudo group - wheel
+    state: present                                                            ##  State present - idempotent
+
+
+- name: Adding Sudoers to Wheel
+  user:
+    name: "{{ item.Telent_UserName }}"                                        ##  Using Telent User
+    groups: wheel                                                             ##  Adding to Group of Wheel - could be added to others
+    append: yes                                                               ##  User remains in other groups
+    state: present                                                            ##  Ensures user is present and idempotent
+    createhome: yes                                                           ##  Home directory created for users when the account is created
+  with_items: "{{ Auth_Usr_Telent }}"                                         ##  List detailed in vars
+  when:  Telent_Sudoer is defined as true                                  ##  When command used as conditional

@@ -1,0 +1,9 @@
+
+ - name: Updating OS
+   hosts: all
+   become: true
+   gather_facts: yes
+  # order: inventory
+#   serial: 1
+   roles:
+        -  MOTD
